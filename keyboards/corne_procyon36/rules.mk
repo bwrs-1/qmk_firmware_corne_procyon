@@ -1,10 +1,8 @@
-# -------------------------------------------------------------
-# corne_procyon36 用 Makefile 追加設定
-# - シリアルドライバやポイントデバイスドライバを指定
-# - デバッグ/コンソールの有効化は config.h で行うことを推奨
-# -------------------------------------------------------------
 SERIAL_DRIVER = vendor
 I2C_DRIVER_REQUIRED = yes
 DIGITIZER_DRIVER = maxtouch
 POINTING_DEVICE_DRIVER = digitizer
-MAXTOUCH_DEBUG = no
+MAXTOUCH_DEBUG = no   # VIA と raw_hid_receive 重複を回避
+CONSOLE_ENABLE = yes   # HID コンソール出力を有効
+DEBUG_ENABLE = yes     # dprintf/uprintf を有効
+SRC += digitizer_user.c

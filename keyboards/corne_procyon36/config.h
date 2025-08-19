@@ -16,20 +16,11 @@
 
 #pragma once
 
-/* -------------------------------------------------------------
- * corne_procyon36 用キーボード設定
- * このファイルでは基板ピンアサイン・機能フラグ・I2C 設定など
- * ハードウェアに密接に関わる定義を行います。
- * 変更時はビルド後に必ず左右両方の MCU へ再フラッシュしてください。
- * ------------------------------------------------------------- */
-
 /* Double tap reset button to enter bootloader */
 
 /* Handedness. */
-// #define SPLIT_HAND_PIN GP29                    // コメントアウト
-// #define SPLIT_HAND_PIN_LOW_IS_RIGHT           // コメントアウト
-#define EE_HANDS                                // EEPROMベースの左右判定
-// #define MASTER_LEFT                             // 強制的に左手側をマスターとして設定
+#define SPLIT_HAND_PIN GP29
+#define SPLIT_HAND_PIN_LOW_IS_RIGHT // High -> right, Low -> left.
 
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_LED GP25
@@ -45,51 +36,20 @@
 // Enable use of pointing device on slave split.
 #define SPLIT_POINTING_ENABLE
 
-// Pointing device is on the right split
+// Pointing device is on the right split.
 #define POINTING_DEVICE_RIGHT
-
-/*
- * Procyon Trackpad Configuration for corne_procyon36
- * =================================================
- */
-
-// Physical dimensions of the trackpad (in millimeters)
-#define POINTING_DEVICE_TRACKPAD_WIDTH_MM  40
-#define POINTING_DEVICE_TRACKPAD_HEIGHT_MM 30
-
-// MXT sensor configuration (required for multitouch_experiment branch)
-#define MXT_SENSOR_WIDTH_MM  40
-#define MXT_SENSOR_HEIGHT_MM 30
-#define MXT_SAMPLES_PER_MM   10  // Resolution: 10 samples per mm
-
-// Digitizer-specific settings
-#define DIGITIZER_I2C_ADDRESS 0x38
-#define DIGITIZER_SENSITIVITY 3.0      // 3x sensitivity for better cursor movement
-#define DIGITIZER_ACCELERATION 2.0     // 2x acceleration for responsiveness
-
-// Touch behavior configuration
-#define POINTING_DEVICE_TAP_TO_CLICK_ENABLE yes
-#define POINTING_DEVICE_TAP_TO_CLICK_TIMEOUT 200
-#define POINTING_DEVICE_TAP_TO_CLICK_DISTANCE 5
-
-// Performance optimization
-#define POINTING_DEVICE_TASK_THROTTLE_MS 4  // Fast response time
-
-// Debug and development options
-#define CONSOLE_ENABLE
-#define DEBUG_ENABLE
-#define DEBUG_POINTING_DEVICE
-#define DEBUG_MATRIX
 
 /* CRC. */
 #define CRC8_USE_TABLE
 #define CRC8_OPTIMIZE_SPEED
 
-// I2C Configuration for Procyon Trackpad (RIGHT SIDE)
 #define I2C_DRIVER I2CD1
-#define I2C1_SDA_PIN GP4  // RIGHT SIDE trackpad I2C
-#define I2C1_SCL_PIN GP5  // RIGHT SIDE trackpad I2C
-#define I2C1_CLOCK_SPEED 400000  // 400kHz for stable communication
+#define I2C1_SDA_PIN GP2
+#define I2C1_SCL_PIN GP3
+#define I2C1_CLOCK_SPEED 1000000
+#define DIGITIZER_MOTION_PIN GP11
+#define DIGITIZER_MOTION_PIN_ACTIVE_LOW yes
+#define PROCYON_42_50
 
 
 // Reduce soft serial speed: Work around rp2040 issues
