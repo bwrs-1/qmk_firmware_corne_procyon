@@ -1,1 +1,0 @@
-MAXTOUCH_DEBUG = yes
