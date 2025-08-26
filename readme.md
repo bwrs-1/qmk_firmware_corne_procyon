@@ -1,82 +1,94 @@
-# THIS IS THE DEVELOP BRANCH
+# QMK Firmware - Corne Procyon36
 
-Warning- This is the `develop` branch of QMK Firmware. You may encounter broken code here. Please see [Breaking Changes](https://docs.qmk.fm/#/breaking_changes) for more information.
+Corne Procyon36キーボード用のQMKファームウェアです。
 
-# Quantum Mechanical Keyboard Firmware
+## 自動ビルド環境
 
-[![Current Version](https://img.shields.io/github/tag/qmk/qmk_firmware.svg)](https://github.com/qmk/qmk_firmware/tags)
-[![Discord](https://img.shields.io/discord/440868230475677696.svg)](https://discord.gg/qmk)
-[![Docs Status](https://img.shields.io/badge/docs-ready-orange.svg)](https://docs.qmk.fm)
-[![GitHub contributors](https://img.shields.io/github/contributors/qmk/qmk_firmware.svg)](https://github.com/qmk/qmk_firmware/pulse/monthly)
-[![GitHub forks](https://img.shields.io/github/forks/qmk/qmk_firmware.svg?style=social&label=Fork)](https://github.com/qmk/qmk_firmware/)
-
-This is a keyboard firmware based on the [tmk\_keyboard firmware](https://github.com/tmk/tmk_keyboard) with some useful features for Atmel AVR and ARM controllers, and more specifically, the [OLKB product line](https://olkb.com), the [ErgoDox EZ](https://ergodox-ez.com) keyboard, and the Clueboard product line.
-
-## Documentation
-
-* [See the official documentation on docs.qmk.fm](https://docs.qmk.fm)
-
-The docs are powered by [VitePress](https://vitepress.dev/). They are also viewable offline; see [Previewing the Documentation](https://docs.qmk.fm/#/contributing?id=previewing-the-documentation) for more details.
-
-You can request changes by making a fork and opening a [pull request](https://github.com/qmk/qmk_firmware/pulls).
-
-## Supported Keyboards
-
-* [Planck](/keyboards/planck/)
-* [Preonic](/keyboards/preonic/)
-* [ErgoDox EZ](/keyboards/ergodox_ez/)
-* [Clueboard](/keyboards/clueboard/)
-* [Cluepad](/keyboards/clueboard/17/)
-* [Atreus](/keyboards/atreus/)
-
-The project also includes community support for [lots of other keyboards](/keyboards/).
-
-## Maintainers
-
-QMK is developed and maintained by Jack Humbert of OLKB with contributions from the community, and of course, [Hasu](https://github.com/tmk). The OLKB product firmwares are maintained by [Jack Humbert](https://github.com/jackhumbert), the Ergodox EZ by [ZSA Technology Labs](https://github.com/zsa), the Clueboard by [Zach White](https://github.com/skullydazed), and the Atreus by [Phil Hagelberg](https://github.com/technomancy).
-
-## Official Website
-
-[qmk.fm](https://qmk.fm) is the official website of QMK, where you can find links to this page, the documentation, and the keyboards supported by QMK.
-
-## corne_procyon36 キーボード概要
-
-### ハードウェア仕様
-- マイクロコントローラ: RP2040
-- 配列: 3 × 6 分割キーボード (左右各 42 キー)
-- 行列サイズ: 8 行 × 6 列
-- ダイオード方向: ROW2COL
-- スプリット方式: ソフトシリアル (GP0/GP1) + I²C
-- 搭載デバイス:
-  - WS2812 RGB LED (GP15)
-  - Rotary Encoder（左右各 1 基）
-  - 右側タッチパッド (MaXTouch I²C, アドレス 0x38)
-
-### ビルド手順
+### セットアップ
 ```bash
-# QMK 開発環境の初期化 (初回のみ)
-qmk setup -y
+# watchexecのインストール（初回のみ）
+brew install watchexec
 
-# デフォルトキーマップ
-qmk compile -kb corne_procyon36 -km default
-
-# 左手マスター用ファーム (EEPROM に Left を自動書込)
-qmk compile -kb corne_procyon36 -km left_master
-
-# 右手マスター用ファーム (EEPROM に Right を自動書込)
-qmk compile -kb corne_procyon36 -km right_master
+# 実行権限の付与（初回のみ）
+chmod +x auto-build.sh
 ```
 
-### フラッシュ手順
-1. RP2040 の BOOTSEL ボタンを押しながら USB 接続し、`RPI-RP2` ドライブをマウントする  
-2. 生成された UF2 ファイルをドラッグ & ドロップ  
-   - 左基板: `corne_procyon36_left_master.uf2`  
-   - 右基板: `corne_procyon36_right_master.uf2`  
-3. 自動リブート後、HID-Console で `pointing_device: init ok` が表示されることを確認
+### 使用方法
 
-### トラブルシューティング
-- タッチパッドが動作しない場合は以下を確認  
-  1. I²C 配線 (右側 GP4: SDA, GP5: SCL)  
-  2. `EE_HANDS` が `INIT_EE_HANDS_*` で正しく書き込まれているか  
-  3. HID-Console に `init failed` が出ていないか  
-- 隠し `.build/` フォルダは `Shift + ⌘ + .` で表示できます  
+#### 自動ビルド（ファイル変更監視）
+```bash
+# ファイル変更を監視して自動ビルド
+npm run watch
+# または
+./auto-build.sh
+```
+
+#### 手動ビルド
+```bash
+# 1回だけビルド
+npm run build:once
+# または
+qmk compile -kb corne_procyon36 -km default
+```
+
+#### クリーンアップ
+```bash
+# ビルド成果物をクリーン
+npm run clean
+# または
+qmk clean
+```
+
+### 監視対象
+- `keyboards/corne_procyon36/` - キーボード固有のファイル
+- `quantum/` - QMKコア機能
+- `drivers/` - ドライバー
+- `lib/` - ライブラリ
+
+### 監視ファイル拡張子
+- `.c` - Cソースファイル
+- `.h` - ヘッダーファイル
+- `.mk` - Makefile
+- `.json` - 設定ファイル
+
+### 特徴
+- 🚀 初回ビルドで動作確認
+- 👀 ファイル変更の自動検知
+- ⏱️  700msデバウンスで重複ビルドを防止
+- 🔄 変更ごとの自動再ビルド
+- ✅ ビルド成功/失敗の明確な表示
+- 🔌 **自動フラッシュ機能**（ビルド成功後）
+
+## 自動フラッシュ機能
+
+### 動作フロー
+1. **ビルド成功** → UF2ファイルを自動検出
+2. **フラッシュ確認** → ユーザーに実行確認を表示
+3. **フラッシュ実行** → RP2040のRPI-RP2ドライブに自動コピー
+4. **完了通知** → フラッシュ完了とリブート通知
+
+### フラッシュ手順
+1. **BOOTSELモード**: RP2040のBOOTSELボタンを押しながらUSB接続
+2. **ドライブ確認**: `RPI-RP2`ドライブが表示されることを確認
+3. **フラッシュ実行**: スクリプトで`y`を入力してフラッシュ開始
+4. **自動リブート**: フラッシュ完了後、キーボードが自動リブート
+
+### 対応OS
+- ✅ **macOS**: 自動フラッシュ対応（`/Volumes/RPI-RP2/`に自動コピー）
+- ⚠️  **その他OS**: 手動フラッシュ（ファイルパスを表示）
+
+### 安全機能
+- フラッシュ前のユーザー確認
+- BOOTSELモードの事前案内
+- エラーハンドリングと詳細なフィードバック
+- フラッシュ失敗時のトラブルシューティング案内
+
+## 開発環境
+- QMK CLI: `brew install qmk/qmk/qmk`
+- ファイル監視: `watchexec`
+- 対象キーボード: `corne_procyon36`
+- デフォルトキーマップ: `default`
+
+## 参考
+- [QMK公式ドキュメント](https://docs.qmk.fm/)
+- [QMK CLI](https://docs.qmk.fm/#/cli)
