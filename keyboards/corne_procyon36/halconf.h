@@ -7,7 +7,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR ANY PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -16,7 +16,23 @@
 
 #pragma once
 
-#define HAL_USE_SPI TRUE
-#define HAL_USE_I2C TRUE
+/* ============================================================================
+ * HAL設定ファイル
+ * ============================================================================
+ * このファイルは、ChibiOSハードウェア抽象化レイヤー（HAL）の
+ * 設定を定義します。SPIとI2Cの使用を有効化しています
+ */
 
-#include_next <halconf.h>
+/* ============================================================================
+ * 通信インターフェース設定
+ * ============================================================================ */
+#define HAL_USE_SPI TRUE                   // SPI（Serial Peripheral Interface）を有効化
+                                          // フラッシュメモリやその他のSPIデバイス用
+
+#define HAL_USE_I2C TRUE                   // I2C（Inter-Integrated Circuit）を有効化
+                                          // デジタイザーやその他のI2Cデバイス用
+
+/* ============================================================================
+ * 標準HAL設定の読み込み
+ * ============================================================================ */
+#include_next <halconf.h>                  // 標準的なHAL設定を読み込み
