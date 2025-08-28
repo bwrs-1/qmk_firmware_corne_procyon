@@ -7,10 +7,10 @@
 // OR in new definitions as boards become available
 #if defined(PROCYON_50_42) || defined(PROCYON_42_50) || defined(PROCYON_57_80)
 #    ifndef MXT_GAIN
-#        define MXT_GAIN 10
+#        define MXT_GAIN 6
 #    endif
 #    ifndef MXT_TOUCH_THRESHOLD
-#        define MXT_TOUCH_THRESHOLD 20
+#        define MXT_TOUCH_THRESHOLD 15
 #    endif
 #    ifndef MXT_TOUCH_HYST
 #        define MXT_TOUCH_HYST 10
@@ -25,9 +25,9 @@
 #    define MXT_RETRANSMISSION_COMPENSATION_ENABLE 0
 #    define MXT_X_PITCH 38 // Procyon boards have a standard 3.8mm pitch
 #    define MXT_Y_PITCH 38
-#    define MXT_ACTIVE_ACQUISITION_INTERVAL 255 // Free run while active - this enables us to reach a polling rate of around 300Hz
+#    define MXT_ACTIVE_ACQUISITION_INTERVAL 50 // Reduced polling rate for stability - around 60Hz
 #    define MXT_CONFTHR 5 // Increase debounce time
-#    define MXT_MOVE_HYSTERESIS_NEXT 16
+#    define MXT_MOVE_HYSTERESIS_NEXT 8
 #endif
 
 // Board specific configuration
