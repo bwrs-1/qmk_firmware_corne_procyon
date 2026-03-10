@@ -1,0 +1,45 @@
+::group::Clone QMK repository
+Traceback (most recent call last):
+  File "/.venv/bin/qmk", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/.venv/lib/python3.11/site-packages/qmk_cli/script_qmk.py", line 62, in main
+    qmk_firmware = find_qmk_firmware()
+                   ^^^^^^^^^^^^^^^^^^^
+  File "/.venv/lib/python3.11/site-packages/qmk_cli/helpers.py", line 35, in find_qmk_firmware
+    if in_qmk_firmware():
+       ^^^^^^^^^^^^^^^^^
+  File "/.venv/lib/python3.11/site-packages/qmk_cli/helpers.py", line 53, in in_qmk_firmware
+    cur_dir = Path.cwd()
+              ^^^^^^^^^^
+  File "/usr/lib/python3.11/pathlib.py", line 908, in cwd
+    return cls(os.getcwd())
+               ^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory
+::endgroup::
+::group::Install compile packages
+/entrypoint.sh: line 14: cd: /qmk_firmware/: No such file or directory
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+bash: util/qmk_install.sh: No such file or directory
+::endgroup::
+::group::Compiling firmware
+Traceback (most recent call last):
+  File "/.venv/bin/qmk", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/.venv/lib/python3.11/site-packages/qmk_cli/script_qmk.py", line 62, in main
+    qmk_firmware = find_qmk_firmware()
+                   ^^^^^^^^^^^^^^^^^^^
+  File "/.venv/lib/python3.11/site-packages/qmk_cli/helpers.py", line 35, in find_qmk_firmware
+    if in_qmk_firmware():
+       ^^^^^^^^^^^^^^^^^
+  File "/.venv/lib/python3.11/site-packages/qmk_cli/helpers.py", line 53, in in_qmk_firmware
+    cur_dir = Path.cwd()
+              ^^^^^^^^^^
+  File "/usr/lib/python3.11/pathlib.py", line 908, in cwd
+    return cls(os.getcwd())
+               ^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory
+::endgroup::
+find: '/qmk_firmware/': No such file or directory
+::error::Failed to find compiled .hex file

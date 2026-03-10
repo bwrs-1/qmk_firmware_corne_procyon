@@ -15,24 +15,30 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout custom keyboard code
         uses: actions/checkout@v4
 
-      # カスタムGithub Actionを利用してCorne Procyon 36のファームウェアをビルド
-      - name: QMK Build firmware Action
-        uses: ijikeman/qmk_build@v0.0.1
+      - name: Checkout QMK firmware
+        uses: actions/checkout@v4
         with:
-          keyboard: 'corne_procyon36'
-          keymap: 'default'
+          repository: qmk/qmk_firmware
+          path: qmk_firmware
+          submodules: recursive
 
-      - name: Set build output path
-        run: echo "BUILD_OUTPUT=$(pwd)/.build/corne_procyon36/default" >> $GITHUB_ENV
-
-      - name: List build output
-        run: ls -R ${{ env.BUILD_OUTPUT }}
+      - name: Compile firmware
+        run: |
+          # Copy our keyboard files into the QMK tree
+          cp -r keyboards/corne_procyon36 qmk_firmware/keyboards/
+          cd qmk_firmware
+          
+          # Build using the official QMK CLI container mapped to our workspace
+          docker run --rm -v ${{ github.workspace }}/qmk_firmware:/qmk_firmware -w /qmk_firmware ghcr.io/qmk/qmk_cli qmk compile -kb corne_procyon36 -km default
+          
+          # Change ownership of the build output from root so actions/upload-artifact can read it
+          sudo chown -R $USER:$USER .build
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: ${{ env.BUILD_OUTPUT }}/*.hex
+          path: qmk_firmware/.build/*.hex
