@@ -46,10 +46,10 @@ function App() {
         {/* Header Section */}
         <div className="text-center mb-16 opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-accent-400">
-            Corne Procyon Config
+            Corne Procyon 設定
           </h1>
           <p className="text-dark-300 text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto">
-            A premium WebHID configuration tool dedicated to your Corne Procyon 36. Remap keys, change layers, and tweak settings directly from your browser.
+            Corne Procyon 36 専用のプレミアム WebHID コンフィギュレータ。ブラウザから直接キーマップ変更、レイヤー操作、設定の微調整が可能です。
           </p>
         </div>
 
@@ -60,9 +60,9 @@ function App() {
             <div className={`p-4 rounded-full mb-4 transition-colors ${deviceConnected ? 'bg-accent-500/20 text-accent-400' : 'bg-dark-700/50 text-dark-300 group-hover:bg-primary-500/20 group-hover:text-primary-400'}`}>
               <Plug size={32} />
             </div>
-            <h3 className="text-lg font-medium mb-1 tracking-wide">Connection Status</h3>
+            <h3 className="text-lg font-medium mb-1 tracking-wide">接続ステータス</h3>
             <p className="text-sm text-dark-400">
-              {deviceConnected ? 'Device Connected (VIA Protocol Ready)' : 'No device detected. Click connect to authorize.'}
+              {deviceConnected ? 'デバイス接続済み (VIA プロトコル対応)' : 'デバイス未検出。設定を開始するには「接続」をクリックしてください。'}
             </p>
           </div>
 
@@ -70,16 +70,16 @@ function App() {
             <div className="p-4 rounded-full mb-4 bg-dark-700/50 text-dark-300">
               <Keyboard size={32} />
             </div>
-            <h3 className="text-lg font-medium mb-1 tracking-wide">Keymap Editor</h3>
-            <p className="text-sm text-dark-400">Map your 36 keys intuitively. Drag & drop functionality coming soon.</p>
+            <h3 className="text-lg font-medium mb-1 tracking-wide">キーマップエディタ</h3>
+            <p className="text-sm text-dark-400">直感的な36キーマッピング。ドラッグ＆ドロップ機能（近日公開予定）。</p>
           </div>
 
           <div className="glass-panel p-6 flex flex-col items-center text-center glow-hover cursor-default">
             <div className="p-4 rounded-full mb-4 bg-dark-700/50 text-dark-300">
               <Settings2 size={32} />
             </div>
-            <h3 className="text-lg font-medium mb-1 tracking-wide">Device Settings</h3>
-            <p className="text-sm text-dark-400">Adjust RGB matrix, pointing device sensitivity, and macro layers.</p>
+            <h3 className="text-lg font-medium mb-1 tracking-wide">デバイス設定</h3>
+            <p className="text-sm text-dark-400">RGBマトリクス、ポインティングデバイス感度、マクロレイヤーの調整。</p>
           </div>
 
         </div>
@@ -95,25 +95,25 @@ function App() {
                 : 'bg-primary-500 hover:bg-primary-400 text-white shadow-lg shadow-primary-500/20 hover:shadow-primary-400/40 hover:-translate-y-1'
               }`}
           >
-            {deviceConnected ? 'Configurator Active' : 'Connect Keyboard via WebHID'}
+            {deviceConnected ? 'コンフィギュレータ接続中' : 'WebHID でキーボードと接続'}
           </button>
 
           <div className="mt-8 grid grid-cols-2 gap-4 w-full text-xs text-dark-400">
             <div className="flex items-center gap-2">
               <ShieldCheck size={16} className="text-accent-400" />
-              <span>Secure Local Connection</span>
+              <span>セキュアなローカル接続</span>
             </div>
             <div className="flex items-center gap-2">
               <Activity size={16} className="text-primary-400" />
-              <span>Real-time Updates</span>
+              <span>リアルタイム更新</span>
             </div>
             <div className="flex items-center gap-2">
               <Smartphone size={16} className="text-purple-400" />
-              <span>Responsive & PWA</span>
+              <span>レスポンシブ・PWA対応</span>
             </div>
             <div className="flex items-center gap-2">
               <MousePointer2 size={16} className="text-orange-400" />
-              <span>Cursor Device Support</span>
+              <span>ポインティングデバイス対応</span>
             </div>
           </div>
         </div>
@@ -121,7 +121,7 @@ function App() {
 
       {/* Footer */}
       <div className="absolute bottom-6 text-dark-500 text-sm font-light">
-        Powered by WebHID API &bull; QMK Firmware Compatible
+        Powered by WebHID API &bull; QMK Firmware 対応
       </div>
 
       <style>{`
