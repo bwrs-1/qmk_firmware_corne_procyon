@@ -23,7 +23,6 @@ jobs:
         uses: ijikeman/qmk_build@v0.0.1
         with:
           keyboard: 'corne_procyon36'
-          rev: '' # リビジョンがないため空指定
           keymap: 'default'
 
       # 生成された.hexファイルをartifactとして保存
