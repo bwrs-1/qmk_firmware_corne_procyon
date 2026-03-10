@@ -1,0 +1,34 @@
+name: QMK Firmware Build Action
+
+on:
+  push:
+    branches:
+      - corne_procyon_dev
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # カスタムGithub Actionを利用してCorne Procyon 36のファームウェアをビルド
+      - name: QMK Build firmware Action
+        uses: ijikeman/qmk_build@v0.0.1
+        with:
+          keyboard: 'corne_procyon36'
+          rev: '' # リビジョンがないため空指定
+          keymap: 'default'
+
+      # 生成された.hexファイルをartifactとして保存
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: ${{ github.workspace }}/output/*.hex

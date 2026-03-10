@@ -1,0 +1,61 @@
+services:
+  qmk-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: qmk-corne-procyon36-dev
+    volumes:
+      # QMKファームウェアディレクトリのマウント
+      - .:/qmk_firmware:z
+      # USBデバイスアクセス用（フラッシュ時に必要）
+      - /dev:/dev:ro
+    privileged: true
+    stdin_open: true
+    tty: true
+    environment:
+      - SKIP_GIT=yes
+      - MAKEFLAGS=-j4
+      - QMK_HOME=/qmk_firmware
+    working_dir: /qmk_firmware
+    networks:
+      - qmk-network
+
+  # QMKビルド専用サービス（軽量）
+  qmk-build:
+    image: ghcr.io/qmk/qmk_cli:latest
+    container_name: qmk-corne-procyon36-build
+    volumes:
+      - .:/qmk_firmware:z
+    environment:
+      - SKIP_GIT=yes
+      - MAKEFLAGS=-j4
+    working_dir: /qmk_firmware
+    networks:
+      - qmk-network
+    profiles:
+      - build-only
+
+  # ドキュメントサーバー（オプション）
+  qmk-docs:
+    image: ghcr.io/qmk/qmk_cli:latest
+    container_name: qmk-corne-procyon36-docs
+    volumes:
+      - .:/qmk_firmware:z
+    ports:
+      - "8080:8080"
+    working_dir: /qmk_firmware
+    command: bash -c "cd docs && python3 -m http.server 8080"
+    networks:
+      - qmk-network
+    profiles:
+      - docs
+
+networks:
+  qmk-network:
+    driver: bridge
+
+# 名前付きボリューム（オプション：ビルドキャッシュ用）
+volumes:
+  qmk-cache:
+    driver: local
+

@@ -20,7 +20,8 @@ enum layer_namKC {
     _BASE,
     _LOWER,
     _RAISE,
-    _ADJUST
+    _ADJUST,
+    _MOUSE
 };
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -58,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          _______,  KC_LGUI, _______,  KC_SPC,     KC_ENT, _______,  _______, _______
                                 //`----------------------------------'  `------------------------------------'
 	),
-   [_ADJUST] =	LAYOUT(
+    [_ADJUST] =	LAYOUT(
     
         XXXXXXX, XXXXXXX,   KC_AT, XXXXXXX,  KC_DLR, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC,
     //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -67,6 +68,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, KC_PERC, XXXXXXX,                      RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, KC_RSFT,
     //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                           _______, KC_LGUI, _______,  KC_SPC,     KC_ENT, _______,  KC_LALT, _______
+                                 //`---------------------------------'  `-----------------------------------'
+	),
+	[_MOUSE] =	LAYOUT(
+    
+        _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
+    //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+        _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
+    //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+        _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
+    //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                          _______, _______, _______, _______,     _______, _______, _______, _______
                                  //`---------------------------------'  `-----------------------------------'
 	)
 
@@ -77,6 +89,14 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [_BASE] = { ENCODER_CCW_CW(KC_MS_WH_DOWN, KC_MS_WH_UP), ENCODER_CCW_CW(KC_AUDIO_VOL_UP, KC_AUDIO_VOL_DOWN) },
     [_LOWER] = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
     [_RAISE] = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-    [_ADJUST] = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) }
+    [_ADJUST] = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
+    [_MOUSE] = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) }
 };
 #endif
+
+void keyboard_post_init_user(void) {
+#ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
+    set_auto_mouse_layer(_MOUSE);
+    set_auto_mouse_enable(true);
+#endif
+}
