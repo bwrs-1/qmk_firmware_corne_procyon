@@ -25,9 +25,14 @@ jobs:
           keyboard: 'corne_procyon36'
           keymap: 'default'
 
-      # 生成された.hexファイルをartifactとして保存
+      - name: Set build output path
+        run: echo "BUILD_OUTPUT=$(pwd)/.build/corne_procyon36/default" >> $GITHUB_ENV
+
+      - name: List build output
+        run: ls -R ${{ env.BUILD_OUTPUT }}
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: ${{ github.workspace }}/output/*.hex
+          path: ${{ env.BUILD_OUTPUT }}/*.hex
